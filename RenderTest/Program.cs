@@ -4,6 +4,7 @@ namespace RenderTest
 {
     /// <summary>
     /// The main class.
+    /// This is a test comment to test version control.
     /// </summary>
     public static class Program
     {
