@@ -51,7 +51,7 @@ namespace RenderTest
 			spriteBatch = new SpriteBatch(GraphicsDevice);
 
 			// TODO: use this.Content to load your game content here
-			model = Content.Load<Model>("utah-teapot");
+			model = Content.Load<Model>("coin");
 
 			whitePixel = new Texture2D(this.graphics.GraphicsDevice, 1, 1);
 			whitePixel.SetData(new [] { Color.AliceBlue });
@@ -174,12 +174,14 @@ namespace RenderTest
 
 		private void DrawModel(Model _model, Matrix _world, Matrix _view, Matrix _projection)
 		{
+			var transformMatrices = new Matrix[_model.Bones.Count];
+			_model.CopyAbsoluteBoneTransformsTo(transformMatrices);
+			
 			foreach (ModelMesh mesh in _model.Meshes)
 			{
-			
 				foreach (BasicEffect effect in mesh.Effects)
 				{
-					effect.World = Matrix.CreateScale(0.25f) * Matrix.CreateRotationY((float) (rotation)) * _world;
+					effect.World = Matrix.CreateScale(0.001f) * Matrix.CreateRotationY((float) (rotation)) * _world * transformMatrices[mesh.ParentBone.Index];
 					effect.View = _view;
 					effect.Projection = _projection;
 
